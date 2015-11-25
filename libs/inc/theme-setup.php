@@ -68,10 +68,7 @@ function arca_setup() {
   ) );
 
   // Set up the WordPress core custom background feature.
-  add_theme_support( 'custom-background', apply_filters( 'arca_custom_background_args', array(
-    'default-color' => 'ffffff',
-    'default-image' => '',
-  ) ) );
+  // z
 }
 endif; // arca_setup
 add_action( 'after_setup_theme', 'arca_setup' );
