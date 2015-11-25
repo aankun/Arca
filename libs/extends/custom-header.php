@@ -22,6 +22,7 @@
  * @uses arca_admin_header_style()
  * @uses arca_admin_header_image()
  */
+/*
 function arca_custom_header_setup() {
 	add_theme_support( 'custom-header', apply_filters( 'arca_custom_header_args', array(
 		'default-image'          => '',
@@ -35,13 +36,9 @@ function arca_custom_header_setup() {
 	) ) );
 }
 add_action( 'after_setup_theme', 'arca_custom_header_setup' );
-
+*/
+/*
 if ( ! function_exists( 'arca_header_style' ) ) :
-/**
- * Styles the header image and text displayed on the blog
- *
- * @see arca_custom_header_setup().
- */
 function arca_header_style() {
 	$header_text_color = get_header_textcolor();
 
@@ -76,13 +73,11 @@ function arca_header_style() {
 	<?php
 }
 endif; // arca_header_style
+*/
 
+/*
 if ( ! function_exists( 'arca_admin_header_style' ) ) :
-/**
- * Styles the header image displayed on the Appearance > Header admin panel.
- *
- * @see arca_custom_header_setup().
- */
+
 function arca_admin_header_style() {
 ?>
 	<style type="text/css">
@@ -104,13 +99,11 @@ function arca_admin_header_style() {
 <?php
 }
 endif; // arca_admin_header_style
+*/
 
+/*
 if ( ! function_exists( 'arca_admin_header_image' ) ) :
-/**
- * Custom header image markup displayed on the Appearance > Header admin panel.
- *
- * @see arca_custom_header_setup().
- */
+
 function arca_admin_header_image() {
 ?>
 	<div id="headimg">
@@ -125,3 +118,4 @@ function arca_admin_header_image() {
 <?php
 }
 endif; // arca_admin_header_image
+*/
