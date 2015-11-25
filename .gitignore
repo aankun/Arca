@@ -1,2 +1,4 @@
 node_modules/
 *.DS_Store
+assets/styles/styles.min.css
+style.css
