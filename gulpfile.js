@@ -149,8 +149,7 @@ gulp.task('compile-styles', function () {
         ]))
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(minifycss())
-        .pipe(gulp.dest(destination))
-        .pipe(notify("Compiled styles"));
+        .pipe(gulp.dest(destination));
 });
 
 
@@ -172,18 +171,23 @@ gulp.task('compile-libCSS', function () {
     return gulp.src(assets.src.libCSS)
         .pipe(minifycss().on('error', handlesassError))
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
-        .pipe(gulp.dest(destination))
-        .pipe(notify("Compiled CSS Lib"));
+        .pipe(gulp.dest(destination));
 });
 
 // combine css files
 gulp.task('combine-css', function () {
     var fileName = 'style.css';
 
+    var handlesassError = function (error) {
+        process.stderr.write('\n' + message + '\n\n'); // Write error to console
+        notify().write("ERROR: Compile styles");
+
+        this.emit('end');
+    };
+
     return gulp.src(assets.dist.compiled)
-        .pipe(concat(fileName))
-        .pipe(gulp.dest(webroot))
-        .pipe(notify("Css file combined"));
+        .pipe(concat(fileName).on('error', handlesassError))
+        .pipe(gulp.dest(webroot));
 
 });
 
@@ -207,8 +211,7 @@ gulp.task('compile-scripts', function () {
         .on('error', handleJsHintError)
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(uglify())
-        .pipe(gulp.dest(destination))
-        .pipe(notify("Compiled scripts"));
+        .pipe(gulp.dest(destination));
 });
 
 /**
@@ -224,7 +227,7 @@ gulp.task('compile-libScripts', function () {
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(uglify())
         .pipe(gulp.dest(destination))
-        .pipe(notify("Compiled Scripts Lib"));
+        .pipe(notify("Compiled Success"));
 });
 
 /**
