@@ -75,38 +75,24 @@ gulp.task('default', ['compile', 'watch'], function () {
  */
 gulp.task('watch', function () {
     // Watch our views
-    watch(assets.src.views, function() {
-        gulp.start('views');
-    });
+    gulp.watch(assets.src.views, ['views']);
 
     // Watch our styles
-    watch(assets.src.styles.all, function() {
-        gulp.start('compile-styles');
-    });
+    gulp.watch(assets.src.styles.all, ['compile-styles']);
 
     // Watch our scripts
-    watch(assets.src.scripts, function() {
-        gulp.start('compile-scripts');
-    });
+    gulp.watch(assets.src.scripts, ['compile-scripts']);
 
     // Watch our scripts lib
-    watch(assets.src.libScripts, function() {
-        gulp.start('compile-libScripts');
-    });    
+    gulp.watch(assets.src.libScripts, ['compile-libScripts']);
 
     // Watch our scripts lib
-    watch(assets.src.libCSS, function() {
-        gulp.start('compile-libCSS');
-    });
+    gulp.watch(assets.src.libCSS, ['compile-libCSS']);
 
     // combine CSS
-    watch(assets.dist.compiled, function () {
-        gulp.start('combine-css');
-    });
+    gulp.watch(assets.dist.compiled, ['combine-css']);
     
-    watch(assets.src.views, function () {
-        gulp.start('browser-sync');
-    });
+    gulp.watch(assets.src.views, ['browser-sync']);
     
 });
 
@@ -149,7 +135,8 @@ gulp.task('compile-styles', function () {
         ]))
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(minifycss())
-        .pipe(gulp.dest(destination));
+        .pipe(gulp.dest(destination))
+        .pipe(browserSync.stream());
 });
 
 
@@ -171,7 +158,8 @@ gulp.task('compile-libCSS', function () {
     return gulp.src(assets.src.libCSS)
         .pipe(minifycss().on('error', handlesassError))
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
-        .pipe(gulp.dest(destination));
+        .pipe(gulp.dest(destination))
+        .pipe(browserSync.stream());
 });
 
 // combine css files
@@ -187,7 +175,8 @@ gulp.task('combine-css', function () {
 
     return gulp.src(assets.dist.compiled)
         .pipe(concat(fileName).on('error', handlesassError))
-        .pipe(gulp.dest(webroot));
+        .pipe(gulp.dest(webroot))
+        .pipe(browserSync.stream());
 
 });
 
@@ -211,7 +200,8 @@ gulp.task('compile-scripts', function () {
         .on('error', handleJsHintError)
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(uglify())
-        .pipe(gulp.dest(destination));
+        .pipe(gulp.dest(destination))
+        .pipe(browserSync.stream());
 });
 
 /**
@@ -227,7 +217,8 @@ gulp.task('compile-libScripts', function () {
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(uglify())
         .pipe(gulp.dest(destination))
-        .pipe(notify("Compile Success"));
+        .pipe(notify("Compile Success"))
+        .pipe(browserSync.stream());
 });
 
 /**
@@ -240,7 +231,7 @@ gulp.task('browser-sync', function() {
         // Read here http://www.browsersync.io/docs/options/
         proxy: url,
 
-        // port: 8080,
+        // port: 3000,
 
         // Tunnel the Browsersync server through a random Public URL
         tunnel: true,

@@ -13,7 +13,10 @@ Hi. I'm a starter theme called Arca. I'm a theme based on _s, i meant for hackin
 
  - Clone the repository to your WP theme directory `git clone https://github.com/adiardana/Arca.git`
  - Go inside arca folder using terminal then type `npm install` to install all the dependencies ( make sure you already install node js )
-
+ - Open `gulpfile.js` and then change the `url` variable with your local site url eg: `wp.dev`
+ - Run `gulp` in your terminal to execute the gulp file, after that gulp will automatically open a new window to your site
+ - To check on mobile go to url `http://your-site-ip-address:3000` to check the site with browsersync feature ( note: you mobile must be using same network with the server ) or
+ - Go to `https://arca.localtunnel.me` if you're not in the same network ( Note: browsersync feature will not working so you need to refresh manually every time you make a change )
 
 ----------
 
@@ -28,3 +31,6 @@ Hi. I'm a starter theme called Arca. I'm a theme based on _s, i meant for hackin
 
 ----------
 
+**Credits**
+
+ - Starter Theme Based on Underscores http://underscores.me/, (C) 2012-2015 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
