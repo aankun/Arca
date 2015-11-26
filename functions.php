@@ -14,21 +14,29 @@ define('ARCA_CSS', ARCA_URL.'/assets/styles');
 define('ARCA_MAIN_CSS', get_stylesheet_uri());
 define('ARCA_JS', ARCA_URL.'/assets/scripts');
 
-function loader($folders){
-  foreach ($folders as $folder) {
-    $paths = ARCA_DIR.'/'.$folder;
-    $files = glob($paths.'/*.php');
-
-    foreach ($files as $key => $file) {
-      if(file_exists($file))
-        require_once $file;
-    }
-  }
-}
-
-$folders = array(
-  'libs/inc',
-  'libs/extends'
+$arca_includes = array(
+  'libs/inc/theme-action.php',
+  'libs/inc/theme-ajax.php',
+  'libs/inc/theme-filter.php',
+  'libs/inc/theme-frontend.php',
+  'libs/inc/theme-functions.php',
+  'libs/inc/theme-hooks.php',
+  'libs/inc/theme-options.php',
+  'libs/inc/theme-post-types.php',
+  'libs/inc/theme-setup.php',
+  'libs/extends/menu-walker.php',
+  'libs/extends/custom-header.php',
+  'libs/extends/customizer.php',
+  'libs/extends/extras.php',
+  'libs/extends/jetpack.php',
+  'libs/extends/template-tags.php',
+  'libs/extends/get-the-image.php',
 );
 
-loader($folders);
+foreach ($arca_includes as $file) {
+  if (!$filepath = locate_template($file)) {
+    trigger_error(sprintf(__('Error locating %s for inclusion', 'arca'), $file), E_USER_ERROR);
+  }
+  require_once $filepath;
+}
+unset($file, $filepath);
