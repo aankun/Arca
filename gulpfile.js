@@ -227,7 +227,7 @@ gulp.task('compile-libScripts', function () {
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(uglify())
         .pipe(gulp.dest(destination))
-        .pipe(notify("Compiled Success"));
+        .pipe(notify("Compile Success"));
 });
 
 /**
@@ -237,7 +237,18 @@ gulp.task('compile-libScripts', function () {
  */
 gulp.task('browser-sync', function() {
     browserSync.init(assets.src.views, {
+        // Read here http://www.browsersync.io/docs/options/
         proxy: url,
+
+        // port: 8080,
+
+        // Tunnel the Browsersync server through a random Public URL
+        tunnel: true,
+
+        // Attempt to use the URL "http://my-private-site.localtunnel.me"
+        tunnel: "arca",
+
+        // Inject CSS changes
         injectChanges: true
     });
 });
