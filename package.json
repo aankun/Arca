@@ -1,7 +1,7 @@
 {
-  "name": "enforstudio",
+  "name": "arca",
   "version": "1.0.0",
-  "description": "EnforStudio Wordpress Theme",
+  "description": "Arca Wordpress Theme",
   "dependencies": {
     "autoprefixer-core": "^6.0.1",
     "gulp": "^3.9.0",
@@ -22,6 +22,6 @@
   },
   "devDependencies": {},
   "scripts": {},
-  "author": "Reza",
+  "author": "Adi",
   "license": "GPL"
 }
