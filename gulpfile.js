@@ -75,7 +75,7 @@ gulp.task('default', ['compile', 'watch'], function () {
  */
 gulp.task('watch', function () {
     // Watch our views
-    gulp.watch(assets.src.views, ['views']);
+    gulp.watch(assets.src.views).on('change', reload);
 
     // Watch our styles
     gulp.watch(assets.src.styles.all, ['compile-styles']);
