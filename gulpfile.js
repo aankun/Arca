@@ -1,24 +1,25 @@
 var gulp = require('gulp'),
-
     // Misc
-    fs = require('fs'),
-    livereload = require('gulp-livereload'),
-    notify = require('gulp-notify'),
-    changed = require('gulp-changed'),
-    gutil = require('gulp-util'),
-    watch = require('gulp-watch'),
+    url         = 'wp.dev',
+    fs          = require('fs'),
+    browserSync = require('browser-sync'),
+    reload      = browserSync.reload,
+    notify      = require('gulp-notify'),
+    changed     = require('gulp-changed'),
+    gutil       = require('gulp-util'),
+    watch       = require('gulp-watch'),
 
     // Styles
-    sass = require('gulp-sass'),
+    sass         = require('gulp-sass'),
     autoprefixer = require('autoprefixer-core'),
-    sourcemaps = require('gulp-sourcemaps'),
-    postcss = require('gulp-postcss'),
-    minifycss = require('gulp-minify-css'),
+    sourcemaps   = require('gulp-sourcemaps'),
+    postcss      = require('gulp-postcss'),
+    minifycss    = require('gulp-minify-css'),
 
     // Scripts
     concat = require('gulp-concat'),
     jshint = require('gulp-jshint'),
-    wrap = require('gulp-wrap'),
+    wrap   = require('gulp-wrap'),
     uglify = require('gulp-uglify');
 
 var webroot = './';
@@ -73,8 +74,6 @@ gulp.task('default', ['compile', 'watch'], function () {
  * Watch assets for changes.
  */
 gulp.task('watch', function () {
-    livereload.listen();
-
     // Watch our views
     watch(assets.src.views, function() {
         gulp.start('views');
@@ -105,12 +104,16 @@ gulp.task('watch', function () {
         gulp.start('combine-css');
     });
     
+    watch(assets.src.views, function () {
+        gulp.start('browser-sync');
+    });
+    
 });
 
 /**
  * Compile styles and scripts.
  */
-gulp.task('compile', ['compile-styles', 'compile-scripts', 'compile-libScripts', 'compile-libCSS', 'combine-css'], function () {
+gulp.task('compile', ['compile-styles', 'compile-scripts', 'compile-libScripts', 'compile-libCSS', 'combine-css', 'browser-sync'], function () {
 
 });
 
@@ -147,7 +150,6 @@ gulp.task('compile-styles', function () {
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(minifycss())
         .pipe(gulp.dest(destination))
-        .pipe(livereload())
         .pipe(notify("Compiled styles"));
 });
 
@@ -171,7 +173,6 @@ gulp.task('compile-libCSS', function () {
         .pipe(minifycss().on('error', handlesassError))
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(gulp.dest(destination))
-        .pipe(livereload())
         .pipe(notify("Compiled CSS Lib"));
 });
 
@@ -182,7 +183,6 @@ gulp.task('combine-css', function () {
     return gulp.src(assets.dist.compiled)
         .pipe(concat(fileName))
         .pipe(gulp.dest(webroot))
-        .pipe(livereload())
         .pipe(notify("Css file combined"));
 
 });
@@ -208,7 +208,6 @@ gulp.task('compile-scripts', function () {
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(uglify())
         .pipe(gulp.dest(destination))
-        .pipe(livereload())
         .pipe(notify("Compiled scripts"));
 });
 
@@ -225,16 +224,17 @@ gulp.task('compile-libScripts', function () {
         .pipe(concat(fileName)) // Concatenate all scripts to a single file
         .pipe(uglify())
         .pipe(gulp.dest(destination))
-        .pipe(livereload())
         .pipe(notify("Compiled Scripts Lib"));
 });
 
 /**
- * Enable livereload for changes to views.
+ * Enable Browser Sync for changes to views.
  *
  * @return {Stream}
  */
-gulp.task('views', function () {
-    return gulp.src(assets.src.views)
-        .pipe(livereload());
+gulp.task('browser-sync', function() {
+    browserSync.init(assets.src.views, {
+        proxy: url,
+        injectChanges: true
+    });
 });
